@@ -10,6 +10,7 @@ import { styles } from "./styles";
 import { Card as PaperCard } from "react-native-paper";
 import IconTicket from "../../assets/IconTicket.svg";
 import THEME from "../../THEME";
+import { Button } from "../Button";
 
 type CardTransactionsProps = {
   placa?: string;
@@ -115,25 +116,32 @@ export function CardTransactions({
                 Qual ticket deseja visualizar?
               </Text>
               <View style={styles.cardContainer}>
-                <TouchableOpacity
-                  style={styles.ticketCard}
+                <Button
+                  title="Entrada"
+                  showIcon={false}
+                  backgroundColor={THEME.COLORS.ORANGE}
+                  textColor={THEME.COLORS.WHITE}
+                  size={{ width: 240, height: 60 }} 
                   onPress={() => handleSelection("ingate")}
-                >
-                  <Text style={styles.ticketText}>Entrada</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.ticketCard}
-                  onPress={() => handleSelection("outgate")}
-                >
-                  <Text style={styles.ticketText}>Saída</Text>
-                </TouchableOpacity>
+                />
+                <Button
+                  title="Saída"
+                  showIcon={false}
+                  backgroundColor={THEME.COLORS.ORANGE}
+                  textColor={THEME.COLORS.WHITE}
+                  size={{ width: 240, height: 60 }}
+                  onPress={() => handleSelection("ingate")}
+                />
               </View>
-              <TouchableOpacity
+              <Button
+                title="Fechar"
+                fontWeight={"600"}
+                showIcon={false}
+                fontSize={16}
+                textColor={THEME.COLORS.ORANGE}
+                size={{ width: 100, height: 40 }}
                 onPress={handleCloseModal}
-                style={styles.closeModalButton}
-              >
-                <Text style={styles.closeModalButtonText}>Fechar</Text>
-              </TouchableOpacity>
+              />
             </View>
           </View>
         </TouchableWithoutFeedback>

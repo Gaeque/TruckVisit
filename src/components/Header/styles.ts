@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     height: 80,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   logoutButton: {
     right: 4,
@@ -38,15 +38,39 @@ export const styles = StyleSheet.create({
   textName: {
     textAlign: "left",
     color: THEME.COLORS.WHITE,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "900",
     marginTop: 2,
   },
   textCPF: {
     color: THEME.COLORS.GREY,
-    fontSize: 14,
+    fontSize: 12,
     marginTop: 2,
     marginBottom: 4,
     fontWeight: "500",
   },
+  overlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+  },
+  containerModal: {
+    width: 300,
+    padding: 20,
+    backgroundColor: THEME.COLORS.WHITE,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 20,
+    marginBottom: 20,
+    fontWeight: "500",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 20,
+    width: "100%",
+  }
 });

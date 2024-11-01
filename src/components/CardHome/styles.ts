@@ -8,8 +8,9 @@ export const styles = StyleSheet.create({
   card: {
     width: "100%",
     height: 140,
-    padding: 10,
+    padding: 12,
     borderRadius: 8,
+    
   },
   image: {
     width: "100%",

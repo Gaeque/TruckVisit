@@ -30,8 +30,8 @@ export const styles = StyleSheet.create({
   textError: {
     color: THEME.COLORS.RED,
     fontSize: 14,
-    marginTop: -14,
-    textAlign: "center"
+    marginTop: -12,
+    textAlign: "center",
   },
   backgroundImg: {
     width: "100%",

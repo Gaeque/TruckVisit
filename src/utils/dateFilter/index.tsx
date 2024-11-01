@@ -1,105 +1,93 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import { View, Text, TouchableOpacity, Modal } from "react-native";
 import { styles } from "./styles";
+import IconFilter from "../../assets/IconFilter.svg";
+import { Button } from "../../components/Button";
+import THEME from "../../THEME";
 
-type DateFilterProps = {
-  onFilter: (startDate: Date | null, endDate: Date | null) => void;
+type DateSelectedProps = {
+  onSelectDate?: (date: number) => void;
 };
 
-export default function DateFilter({ onFilter }: DateFilterProps) {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const [showStartDatePicker, setShowStartDatePicker] = useState(false);
-  const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+export default function DateFilterModal({ onSelectDate }: DateSelectedProps) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectDate, setSelectedDate] = useState<number>();
 
-  const handleStartDateChange = (event: any, selectedDate?: Date | undefined) => {
-    setShowStartDatePicker(false);
-    if (selectedDate) {
-      setStartDate(selectedDate);
-    }
+  const handleFilterSelection = (date: number) => {
+    setSelectedDate(date);
+    setModalVisible(false);
+    onSelectDate && onSelectDate(date); 
   };
-
-  const handleEndDateChange = (event: any, selectedDate?: Date | undefined) => {
-    setShowEndDatePicker(false);
-    if (selectedDate && startDate && selectedDate < startDate) {
-      Alert.alert(
-        "Data inválida",
-        "Data final não pode ser inferior à data inicial."
-      );
-      return;
-    }
-    setEndDate(selectedDate || endDate);
-  };
-
-  const formatDate = (date: Date | null) => {
-    if (!date) return "";
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
-
-  const clearFilters = () => {
-    setStartDate(null);
-    setEndDate(null);
-    onFilter(null, null);
-  };
-
-  const applyFilters = () => {
-    if (startDate && endDate && endDate < startDate) {
-      Alert.alert(
-        "Data inválida",
-        "Data final não pode ser inferior à data inicial."
-      );
-      return;
-    }
-    onFilter(startDate, endDate);
-  };
-
   return (
     <View style={styles.container}>
-      <View style={styles.dates}>
-        <TouchableOpacity
-          onPress={() => setShowStartDatePicker(true)}
-          style={styles.date}
-        >
-          <Text>{formatDate(startDate) || "Data inicial"}</Text>
-          {showStartDatePicker && (
-            <DateTimePicker
-              value={startDate || new Date()}
-              mode="date"
-              display="default"
-              onChange={handleStartDateChange}
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <IconFilter width={40} height={40} />
+      </TouchableOpacity>
+
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Últimas transações</Text>
+            <View style={styles.filterButtonsGrid}>
+              <Button
+                title="7 Dias"
+                showIcon={false}
+                backgroundColor={THEME.COLORS.ORANGE}
+                textColor={THEME.COLORS.WHITE}
+                fontWeight="500"
+                fontSize={16}
+                size={{ width: 100, height: 40 }}
+                onPress={() => handleFilterSelection(7)}
+              />
+              <Button
+                title="15 Dias"
+                showIcon={false}
+                backgroundColor={THEME.COLORS.ORANGE}
+                textColor={THEME.COLORS.WHITE}
+                fontWeight="500"
+                fontSize={16}
+                size={{ width: 100, height: 40 }}
+                onPress={() => handleFilterSelection(15)}
+              />
+              <Button
+                title="1 Mês"
+                showIcon={false}
+                backgroundColor={THEME.COLORS.ORANGE}
+                textColor={THEME.COLORS.WHITE}
+                fontWeight="500"
+                fontSize={16}
+                size={{ width: 100, height: 40 }}
+                onPress={() => handleFilterSelection(30)}
+              />
+              <Button
+                title="6 Meses"
+                showIcon={false}
+                backgroundColor={THEME.COLORS.ORANGE}
+                textColor={THEME.COLORS.WHITE}
+                fontWeight="500"
+                fontSize={16}
+                size={{ width: 100, height: 40 }}
+                onPress={() => handleFilterSelection(183)}
+              />
+            </View>
+
+            <Button
+              title="Fechar"
+              fontWeight={"600"}
+              showIcon={false}
+              fontSize={16}
+              textColor={THEME.COLORS.ORANGE}
+              size={{ width: 100, height: 40 }}
+              onPress={() => setModalVisible(false)}
             />
-          )}
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => setShowEndDatePicker(true)}
-          style={styles.date}
-        >
-          <Text>{formatDate(endDate) || "Data final"}</Text>
-          {showEndDatePicker && (
-            <DateTimePicker
-              value={endDate || new Date()}
-              mode="date"
-              display="default"
-              onChange={handleEndDateChange}
-            />
-          )}
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.buttons}>
-        <TouchableOpacity onPress={clearFilters} style={styles.clearButton}>
-          <Text style={styles.buttonText}>Limpar filtro</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={applyFilters} style={styles.applyButton}>
-          <Text style={styles.buttonText}>Filtrar</Text>
-        </TouchableOpacity>
-      </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }

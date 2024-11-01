@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-    borderRadius: 4,
+    borderRadius: 6,
     borderWidth: 2,
     borderColor: THEME.COLORS.ORANGE,
     position: "relative",

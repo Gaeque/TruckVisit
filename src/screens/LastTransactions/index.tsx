@@ -24,6 +24,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { AxiosError } from "axios";
 import THEME from "../../THEME";
 import { IconReturn } from "../../components/IconReturn";
+import { Button } from "../../components/Button";
+import LogoTecon1 from "../../assets/logoTecon1.svg";
 
 export function LastTransactions() {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,19 +39,25 @@ export function LastTransactions() {
   const navigation = useNavigation<HomeRoutesProps>();
   const { gKey: userGkey } = useContext(AuthContext);
 
-  async function fetchTransactionsCard() {
+  async function fetchTransactionsCard(date?: number) {
     try {
+      console.log(date);
       setIsLoading(true);
       if (userGkey) {
         const response = await api.get(
-          `/api-app-truckvisit/truckVisit/${userGkey}`
+          `/api-app-truckvisit/truckVisit/${userGkey}/{date}`
         );
         const data: TransactionsDTO[] = response.data;
         setTransactions(data);
         setFilteredTransactions(data.slice(0, 6));
       }
     } catch (error) {
-      console.error("Error fetching transactions:", error);
+      if (error) {
+        Alert.alert(
+          "Aviso",
+          "Não conseguimos retornar suas transações, tente novamente."
+        );
+      }
     } finally {
       setIsLoading(false);
     }
@@ -133,7 +141,7 @@ export function LastTransactions() {
         </TouchableOpacity>
         <Text style={styles.headerText}>Últimas transações</Text>
         <TouchableOpacity>
-          <IconFilter width={40} height={40} />
+          <DateFilter onSelectDate={fetchTransactionsCard} />
         </TouchableOpacity>
       </View>
 
@@ -141,34 +149,30 @@ export function LastTransactions() {
         <Loading />
       ) : transactions.length === 0 ? (
         <View style={styles.noTransactionsContainer}>
-          <Text style={styles.noTransactionsText}>
-            Transações não encontradas nesse CPF
-          </Text>
+          <LogoTecon1 width={200} height={100} />
         </View>
       ) : (
-        <>
-          <FlatList
-            data={filteredTransactions}
-            renderItem={({ item }) => (
-              <CardTransactions
-                placa={item.truckID}
-                containers={item.containers.map((container) => ({
-                  name: container.ID,
-                  position: container.position,
-                }))}
-                transacoes={item.containers.length.toString()}
-                dataEntrada={item.entered}
-                dataSaida={item.exited}
-                borderColor={
-                  item.exited ? THEME.COLORS.GREY2 : THEME.COLORS.GREEN
-                }
-                onSelectType={(type) => fetchTicketTransaction(type, item.gkey)}
-              />
-            )}
-            keyExtractor={(item) => item.gkey.toString()}
-            contentContainerStyle={styles.cardsTransactions}
-          />
-        </>
+        <FlatList
+          data={filteredTransactions}
+          renderItem={({ item }) => (
+            <CardTransactions
+              placa={item.truckID}
+              containers={item.containers.map((container) => ({
+                name: container.ID,
+                position: container.position,
+              }))}
+              transacoes={item.containers.length.toString()}
+              dataEntrada={item.entered}
+              dataSaida={item.exited}
+              borderColor={
+                item.exited ? THEME.COLORS.GREY2 : THEME.COLORS.GREEN
+              }
+              onSelectType={(type) => fetchTicketTransaction(type, item.gkey)}
+            />
+          )}
+          keyExtractor={(item) => item.gkey.toString()}
+          contentContainerStyle={styles.cardsTransactions}
+        />
       )}
 
       {ticketBase64 && (
@@ -187,13 +191,16 @@ export function LastTransactions() {
           />
 
           <View style={styles.sharePdfContainer}>
-            <TouchableOpacity style={styles.sharePdf} onPress={handleSharePDF}>
-              <Text
-                style={{ color: "white", fontSize: 16, fontWeight: "bold" }}
-              >
-                Salvar ou Compartilhar PDF
-              </Text>
-            </TouchableOpacity>
+            <Button
+              onPress={handleSharePDF}
+              title="Salvar ou Compartilhar PDF"
+              showIcon={false}
+              textColor={THEME.COLORS.WHITE}
+              fontSize={16}
+              backgroundColor={THEME.COLORS.ORANGE}
+              borderColor={THEME.COLORS.ORANGE}
+              size={{ width: 280, height: 40 }}
+            />
           </View>
 
           <View style={styles.numberOfPages}>
