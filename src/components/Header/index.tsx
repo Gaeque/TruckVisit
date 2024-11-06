@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Modal } from "react-native";
+
 import { useAuth } from "../../hooks/useAuth";
+
+import { styles } from "./styles";
+import THEME from "../../THEME";
 
 import TeconLogo from "../../assets/TeconLogo.svg";
 import IconLogout from "../../assets/IconLogout.svg";
+
 import { UserAvatar } from "../Avatar";
-import { styles } from "./styles";
 import { Button } from "../Button";
-import THEME from "../../THEME";
 
 export function Header() {
   const { user, signOut } = useAuth();

@@ -4,14 +4,15 @@ import THEME from "../../THEME";
 
 type LoadingProps = {
   size?: number;
+  color?: string;
 };
 
-export function Loading({ size = 24 }: LoadingProps) {
+export function Loading({ size = 24, color = THEME.COLORS.ORANGE }: LoadingProps) {
   return (
     <ActivityIndicator
       style={{ flex: 1 }}
       animating={true}
-      color={THEME.COLORS.ORANGE}
+      color={color}
       size={size}
     />
   );

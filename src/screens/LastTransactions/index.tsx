@@ -1,34 +1,32 @@
 import React, { useState, useEffect, useContext } from "react";
 import { TouchableOpacity, View, Text, FlatList, Alert } from "react-native";
 
-import { Loading } from "../../components/Loading";
-import IconFilter from "../../assets/IconFilter.svg";
-
 import { styles } from "./styles";
+import THEME from "../../THEME";
 
+import { Loading } from "../../components/Loading";
 import { CardTransactions } from "../../components/CardTransactions";
+import DateFilter from "../../utils/dateFilter";
+import { IconReturn } from "../../components/IconReturn";
+import { Button } from "../../components/Button";
+import TeconLogo from "../../assets/TeconLogo.svg";
 
 import { useNavigation } from "@react-navigation/native";
 import { HomeRoutesProps } from "../../routes/home.routes";
 
 import * as FileSystem from "expo-file-system";
 import Share from "react-native-share";
-
-import DateFilter from "../../utils/dateFilter";
-
 import Pdf from "react-native-pdf";
 
 import { TransactionsDTO } from "../../dtos/TransactionsDTO";
 import { api } from "../../services/api";
 import { AuthContext } from "../../contexts/AuthContext";
+
 import { AxiosError } from "axios";
-import THEME from "../../THEME";
-import { IconReturn } from "../../components/IconReturn";
-import { Button } from "../../components/Button";
-import TeconLogo from "../../assets/TeconLogo.svg";
 
 export function LastTransactions() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isSharing, setIsSharing] = useState(false);
   const [transactions, setTransactions] = useState<TransactionsDTO[]>([]);
   const [filteredTransactions, setFilteredTransactions] = useState<
     TransactionsDTO[]
@@ -114,6 +112,7 @@ export function LastTransactions() {
   }
 
   async function handleSharePDF() {
+    setIsSharing(true);
     if (ticketBase64) {
       const uri = `${FileSystem.cacheDirectory}ticket.pdf`;
       await FileSystem.writeAsStringAsync(uri, ticketBase64, {
@@ -130,6 +129,8 @@ export function LastTransactions() {
         await Share.open(shareOptions);
       } catch (error) {
         Alert.alert("Erro", "Não foi possível compartilhar o arquivo");
+      } finally {
+        setIsSharing(false);
       }
     }
   }
@@ -218,13 +219,20 @@ export function LastTransactions() {
           <View style={styles.sharePdfContainer}>
             <Button
               onPress={handleSharePDF}
-              title="Salvar ou Compartilhar PDF"
+              title={
+                isLoading ? (
+                  <Loading color={THEME.COLORS.WHITE} />
+                ) : (
+                  "Salvar ou Compartilhar PDF"
+                )
+              }
               showIcon={false}
               textColor={THEME.COLORS.WHITE}
               fontSize={16}
               backgroundColor={THEME.COLORS.ORANGE}
               borderColor={THEME.COLORS.ORANGE}
               size={{ width: 280, height: 40 }}
+              disabled={isSharing}
             />
           </View>
 

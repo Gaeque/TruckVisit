@@ -1,4 +1,5 @@
 import { TextInput, TextInputProps } from "react-native-paper";
+
 import { styles } from "./styles";
 import THEME from "../../THEME";
 

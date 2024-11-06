@@ -6,10 +6,13 @@ import {
   Modal,
   TouchableWithoutFeedback,
 } from "react-native";
-import { styles } from "./styles";
+
 import { Card as PaperCard } from "react-native-paper";
-import IconTicket from "../../assets/IconTicket.svg";
+
+import { styles } from "./styles";
 import THEME from "../../THEME";
+
+import IconTicket from "../../assets/IconTicket.svg";
 import { Button } from "../Button";
 
 type CardTransactionsProps = {
@@ -111,38 +114,40 @@ export function CardTransactions({
       >
         <TouchableWithoutFeedback onPress={handleCloseModal}>
           <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>
-                Qual ticket deseja visualizar?
-              </Text>
-              <View style={styles.cardContainer}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>
+                  Qual ticket deseja visualizar?
+                </Text>
+                <View style={styles.cardContainer}>
+                  <Button
+                    title="Entrada"
+                    showIcon={false}
+                    backgroundColor={THEME.COLORS.ORANGE}
+                    textColor={THEME.COLORS.WHITE}
+                    size={{ width: 240, height: 60 }}
+                    onPress={() => handleSelection("ingate")}
+                  />
+                  <Button
+                    title="Saída"
+                    showIcon={false}
+                    backgroundColor={THEME.COLORS.ORANGE}
+                    textColor={THEME.COLORS.WHITE}
+                    size={{ width: 240, height: 60 }}
+                    onPress={() => handleSelection("ingate")}
+                  />
+                </View>
                 <Button
-                  title="Entrada"
+                  title="Fechar"
+                  fontWeight={"600"}
                   showIcon={false}
-                  backgroundColor={THEME.COLORS.ORANGE}
-                  textColor={THEME.COLORS.WHITE}
-                  size={{ width: 240, height: 60 }}
-                  onPress={() => handleSelection("ingate")}
-                />
-                <Button
-                  title="Saída"
-                  showIcon={false}
-                  backgroundColor={THEME.COLORS.ORANGE}
-                  textColor={THEME.COLORS.WHITE}
-                  size={{ width: 240, height: 60 }}
-                  onPress={() => handleSelection("ingate")}
+                  fontSize={16}
+                  textColor={THEME.COLORS.ORANGE}
+                  size={{ width: 100, height: 40 }}
+                  onPress={handleCloseModal}
                 />
               </View>
-              <Button
-                title="Fechar"
-                fontWeight={"600"}
-                showIcon={false}
-                fontSize={16}
-                textColor={THEME.COLORS.ORANGE}
-                size={{ width: 100, height: 40 }}
-                onPress={handleCloseModal}
-              />
-            </View>
+            </TouchableWithoutFeedback>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
