@@ -54,7 +54,7 @@ export function CardTransactions({
   return (
     <>
       <TouchableOpacity
-        activeOpacity={0.1}
+        activeOpacity={0.8}
         style={styles.container}
         onPress={handleOpenModal}
       >

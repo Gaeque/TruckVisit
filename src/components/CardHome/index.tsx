@@ -13,7 +13,7 @@ type CardHomeProps = {
 export function CardHome({ icon, title, onPress }: CardHomeProps) {
   return (
     <TouchableOpacity
-      activeOpacity={0.9}
+      activeOpacity={0.8}
       style={styles.container}
       onPress={onPress}
     >
