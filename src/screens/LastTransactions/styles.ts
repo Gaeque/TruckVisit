@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   noTransactionsText: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "600",
     color: THEME.COLORS.ORANGE,
     textAlign: "center",

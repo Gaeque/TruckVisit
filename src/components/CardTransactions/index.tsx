@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   TouchableOpacity,
   View,
@@ -54,7 +54,7 @@ export function CardTransactions({
   return (
     <>
       <TouchableOpacity
-        activeOpacity={0.9}
+        activeOpacity={0.1}
         style={styles.container}
         onPress={handleOpenModal}
       >
@@ -121,7 +121,7 @@ export function CardTransactions({
                   showIcon={false}
                   backgroundColor={THEME.COLORS.ORANGE}
                   textColor={THEME.COLORS.WHITE}
-                  size={{ width: 240, height: 60 }} 
+                  size={{ width: 240, height: 60 }}
                   onPress={() => handleSelection("ingate")}
                 />
                 <Button

@@ -25,7 +25,7 @@ import { AxiosError } from "axios";
 import THEME from "../../THEME";
 import { IconReturn } from "../../components/IconReturn";
 import { Button } from "../../components/Button";
-import LogoTecon1 from "../../assets/logoTecon1.svg";
+import TeconLogo from "../../assets/TeconLogo.svg";
 
 export function LastTransactions() {
   const [isLoading, setIsLoading] = useState(true);
@@ -33,19 +33,34 @@ export function LastTransactions() {
   const [filteredTransactions, setFilteredTransactions] = useState<
     TransactionsDTO[]
   >([]);
+  const [selectDate, setSelectDate] = useState(0);
   const [ticketBase64, setTicketBase64] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const navigation = useNavigation<HomeRoutesProps>();
   const { gKey: userGkey } = useContext(AuthContext);
 
-  async function fetchTransactionsCard(date?: number) {
+  const getDateLabel = (date: number) => {
+    switch (date) {
+      case 7:
+        return "dias";
+      case 15:
+        return "dias";
+      case 30:
+        return "mês";
+      case 183:
+        return "meses";
+      default:
+        return "";
+    }
+  };
+
+  async function fetchTransactionsCard(date = selectDate) {
     try {
-      console.log(date);
       setIsLoading(true);
       if (userGkey) {
         const response = await api.get(
-          `/api-app-truckvisit/truckVisit/${userGkey}/{date}`
+          `/api-app-truckvisit/truckVisit/${userGkey}/${date}`
         );
         const data: TransactionsDTO[] = response.data;
         setTransactions(data);
@@ -141,7 +156,12 @@ export function LastTransactions() {
         </TouchableOpacity>
         <Text style={styles.headerText}>Últimas transações</Text>
         <TouchableOpacity>
-          <DateFilter onSelectDate={fetchTransactionsCard} />
+          <DateFilter
+            onSelectDate={(date) => {
+              fetchTransactionsCard(date);
+              setSelectDate(date);
+            }}
+          />
         </TouchableOpacity>
       </View>
 
@@ -149,7 +169,12 @@ export function LastTransactions() {
         <Loading />
       ) : transactions.length === 0 ? (
         <View style={styles.noTransactionsContainer}>
-          <LogoTecon1 width={200} height={100} />
+          <Text style={styles.noTransactionsText}>
+            {`Nenhuma transação encontrada nos últimos ${selectDate} ${getDateLabel(
+              selectDate
+            )}`}
+          </Text>
+          <TeconLogo width={200} height={100} />
         </View>
       ) : (
         <FlatList

@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
   containerName: {
     fontSize: 14,
     color: THEME.COLORS.BLACK,
-    marginBottom: 4
+    marginBottom: 4,
   },
   modalContainer: {
     flex: 1,

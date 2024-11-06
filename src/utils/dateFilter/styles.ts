@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   modalContent: {
-    width: 280,
+    width: 300,
     padding: 20,
     backgroundColor: THEME.COLORS.WHITE,
     borderRadius: 8,
@@ -25,15 +25,15 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     gap: 20,
-    marginBottom: 20,
-    marginTop: 10,
+    marginBottom: 40,
+    marginTop: 30,
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "500",
     marginBottom: 10,
     textAlign: "center",
-    color: "#333",
+    color: THEME.COLORS.BLACK,
   },
   closeButton: {
     paddingVertical: 10,
@@ -47,5 +47,11 @@ export const styles = StyleSheet.create({
   closeButtonText: {
     color: THEME.COLORS.WHITE,
     fontWeight: "900",
+  },
+  footerButtons: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%", 
+    gap: 20,
   },
 });

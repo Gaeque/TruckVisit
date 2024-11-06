@@ -16,7 +16,13 @@ export default function DateFilterModal({ onSelectDate }: DateSelectedProps) {
   const handleFilterSelection = (date: number) => {
     setSelectedDate(date);
     setModalVisible(false);
-    onSelectDate && onSelectDate(date); 
+    onSelectDate && onSelectDate(date);
+  };
+
+  const handleClearFilter = () => {
+    setSelectedDate(0);
+    setModalVisible(false);
+    onSelectDate && onSelectDate(0);
   };
   return (
     <View style={styles.container}>
@@ -32,16 +38,16 @@ export default function DateFilterModal({ onSelectDate }: DateSelectedProps) {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Últimas transações</Text>
+            <Text style={styles.modalTitle}>Transações nos últimos:</Text>
             <View style={styles.filterButtonsGrid}>
               <Button
                 title="7 Dias"
                 showIcon={false}
                 backgroundColor={THEME.COLORS.ORANGE}
                 textColor={THEME.COLORS.WHITE}
-                fontWeight="500"
+                fontWeight="600"
                 fontSize={16}
-                size={{ width: 100, height: 40 }}
+                size={{ width: 120, height: 50 }}
                 onPress={() => handleFilterSelection(7)}
               />
               <Button
@@ -49,9 +55,9 @@ export default function DateFilterModal({ onSelectDate }: DateSelectedProps) {
                 showIcon={false}
                 backgroundColor={THEME.COLORS.ORANGE}
                 textColor={THEME.COLORS.WHITE}
-                fontWeight="500"
+                fontWeight="600"
                 fontSize={16}
-                size={{ width: 100, height: 40 }}
+                size={{ width: 120, height: 50 }}
                 onPress={() => handleFilterSelection(15)}
               />
               <Button
@@ -59,9 +65,9 @@ export default function DateFilterModal({ onSelectDate }: DateSelectedProps) {
                 showIcon={false}
                 backgroundColor={THEME.COLORS.ORANGE}
                 textColor={THEME.COLORS.WHITE}
-                fontWeight="500"
+                fontWeight="600"
                 fontSize={16}
-                size={{ width: 100, height: 40 }}
+                size={{ width: 120, height: 50 }}
                 onPress={() => handleFilterSelection(30)}
               />
               <Button
@@ -69,22 +75,34 @@ export default function DateFilterModal({ onSelectDate }: DateSelectedProps) {
                 showIcon={false}
                 backgroundColor={THEME.COLORS.ORANGE}
                 textColor={THEME.COLORS.WHITE}
-                fontWeight="500"
+                fontWeight="600"
                 fontSize={16}
-                size={{ width: 100, height: 40 }}
+                size={{ width: 120, height: 50 }}
                 onPress={() => handleFilterSelection(183)}
               />
             </View>
 
-            <Button
-              title="Fechar"
-              fontWeight={"600"}
-              showIcon={false}
-              fontSize={16}
-              textColor={THEME.COLORS.ORANGE}
-              size={{ width: 100, height: 40 }}
-              onPress={() => setModalVisible(false)}
-            />
+            <View style={styles.footerButtons}>
+              <Button
+                title="Limpar Filtro"
+                fontWeight={"600"}
+                showIcon={false}
+                fontSize={16}
+                textColor={THEME.COLORS.ORANGE}
+                size={{ width: 120, height: 40 }}
+                onPress={handleClearFilter}
+              />
+
+              <Button
+                title="Fechar"
+                fontWeight={"600"}
+                showIcon={false}
+                fontSize={16}
+                textColor={THEME.COLORS.ORANGE}
+                size={{ width: 120, height: 40 }}
+                onPress={() => setModalVisible(false)}
+              />
+            </View>
           </View>
         </View>
       </Modal>
