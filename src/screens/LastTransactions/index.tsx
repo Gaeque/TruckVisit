@@ -112,8 +112,8 @@ export function LastTransactions() {
   }
 
   async function handleSharePDF() {
-    setIsSharing(true);
     if (ticketBase64) {
+      setIsSharing(true);
       const uri = `${FileSystem.cacheDirectory}ticket.pdf`;
       await FileSystem.writeAsStringAsync(uri, ticketBase64, {
         encoding: FileSystem.EncodingType.Base64,
@@ -220,7 +220,7 @@ export function LastTransactions() {
             <Button
               onPress={handleSharePDF}
               title={
-                isLoading ? (
+                isSharing ? (
                   <Loading color={THEME.COLORS.WHITE} />
                 ) : (
                   "Salvar ou Compartilhar PDF"

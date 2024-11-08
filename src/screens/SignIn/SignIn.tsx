@@ -141,6 +141,7 @@ export function SignIn() {
                 title={isLoading ? <Loading /> : "Entrar"}
                 onPress={handleSignIn}
                 disabled={isLoading || cpfError !== null}
+                showIcon={false}
               />
               <TouchableOpacity>
                 <Text>Esqueceu a senha?</Text>

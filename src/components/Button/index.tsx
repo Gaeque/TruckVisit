@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, TouchableOpacityProps } from "react-native";
+import { TouchableOpacity, Text, TouchableOpacityProps, View } from "react-native";
 import { styles } from "./styles";
 import LoginIcon from "../../assets/IconLogin.svg";
 import { ReactNode } from "react";
@@ -23,6 +23,7 @@ type ButtonProps = TouchableOpacityProps & {
     | "700"
     | "800"
     | "900";
+  iconComponent?: ReactNode;
 };
 
 export function Button({
@@ -34,6 +35,7 @@ export function Button({
   textColor,
   fontSize,
   fontWeight,
+  iconComponent,
   ...rest
 }: ButtonProps) {
   return (
@@ -56,7 +58,11 @@ export function Button({
       >
         {title}
       </Text>
-      {showIcon && <LoginIcon style={styles.icon} />}
+      {showIcon && ( 
+        <View style={styles.iconContainer}>
+          {iconComponent || <LoginIcon />} 
+        </View>
+      )}
     </TouchableOpacity>
   );
 }

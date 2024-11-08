@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   containerTicket: {
-    paddingBottom: 20,
+    paddingBottom: 30,
     alignItems: "flex-end",
   },
   containerList: {

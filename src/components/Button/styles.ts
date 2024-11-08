@@ -19,8 +19,11 @@ export const styles = StyleSheet.create({
     color: THEME.COLORS.ORANGE,
     letterSpacing: 1.4,
   },
+  iconContainer: {
+    marginLeft: 2, 
+  },
   icon: {
     position: "absolute",
-    right: 14,
+    left: 14,
   },
 });

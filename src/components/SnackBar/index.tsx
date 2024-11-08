@@ -2,6 +2,7 @@ import React from "react";
 import { Snackbar } from "react-native-paper";
 import { Text } from "react-native";
 import theme from "../../THEME";
+import THEME from "../../THEME";
 
 type SnackbarProps = {
   visible: boolean;
@@ -21,13 +22,9 @@ export function SnackBar({
       visible={visible}
       onDismiss={onDismiss}
       duration={duration}
-      action={{
-        label: "Fechar",
-        onPress: onDismiss,
-      }}
       style={{ backgroundColor: theme.COLORS.WHITE, borderRadius: 20 }}
     >
-      <Text style={{ color: theme.COLORS.ORANGE, textAlign: "center", fontSize: 20 }}>
+      <Text style={{ color: theme.COLORS.ORANGE, textAlign: "center", fontSize: 20, fontWeight: "800" }}>
         {text}
       </Text>
     </Snackbar>
