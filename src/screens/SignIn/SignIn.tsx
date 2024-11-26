@@ -60,8 +60,6 @@ export function SignIn() {
   const [passwordValue, setPasswordValue] = useState("");
   const [cpfError, setCpfError] = useState<string | null>(null);
 
-  const navigator = useNavigation<AuthNavigatorRoutesProps>();
-
   async function handleSignIn() {
     if (cpfError) return;
     try {
@@ -114,7 +112,7 @@ export function SignIn() {
           contentContainerStyle={{
             flexGrow: 1,
             justifyContent: "center",
-            paddingTop: 20,
+            alignItems: "center",
           }}
         >
           <View style={styles.container}>

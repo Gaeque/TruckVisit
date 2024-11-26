@@ -36,6 +36,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
         userId,
         password,
       });
+      console.log(data);
       if (data.authN4) {
         setUser(data);
         const userWithGKey = { ...data, userGkey: data.userGkey };

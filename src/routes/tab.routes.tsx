@@ -38,7 +38,7 @@ export function TabRoutes() {
         component={Home}
         options={{
           tabBarIcon: ({ color }) => (
-            <IconHome width={28} height={28} fill={color} />
+            <IconHome width={30} height={30} fill={color} />
           ),
         }}
       />
@@ -47,7 +47,7 @@ export function TabRoutes() {
         component={Profile}
         options={{
           tabBarIcon: ({ color }) => (
-            <IconUser width={28} height={28} fill={color} />
+            <IconUser width={30} height={30} fill={color} />
           ),
         }}
       />

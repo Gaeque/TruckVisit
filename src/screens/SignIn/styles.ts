@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     backgroundColor: THEME.COLORS.WHITE,
     width: "80%",
     height: 460,
-    borderRadius: 10,
+    borderRadius: 20,
   },
   containerInputs: {
     gap: 20,

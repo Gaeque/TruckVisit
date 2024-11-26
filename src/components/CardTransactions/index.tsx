@@ -14,6 +14,7 @@ import THEME from "../../THEME";
 
 import IconTicket from "../../assets/IconTicket.svg";
 import { Button } from "../Button";
+import { Loading } from "../Loading";
 
 type CardTransactionsProps = {
   placa?: string;
@@ -38,6 +39,7 @@ export function CardTransactions({
 }: CardTransactionsProps) {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedType, setSelectedType] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleOpenModal() {
     setModalVisible(true);
@@ -48,6 +50,7 @@ export function CardTransactions({
   }
 
   const handleSelection = (type: string) => {
+    setIsLoading(true);
     setSelectedType(type);
     if (onSelectType) {
       onSelectType(type);
@@ -121,7 +124,13 @@ export function CardTransactions({
                 </Text>
                 <View style={styles.cardContainer}>
                   <Button
-                    title="Entrada"
+                    title={
+                      isLoading ? (
+                        <Loading color={THEME.COLORS.WHITE} />
+                      ) : (
+                        "Entrada"
+                      )
+                    }
                     showIcon={false}
                     backgroundColor={THEME.COLORS.ORANGE}
                     textColor={THEME.COLORS.WHITE}
@@ -129,7 +138,13 @@ export function CardTransactions({
                     onPress={() => handleSelection("ingate")}
                   />
                   <Button
-                    title="Saída"
+                    title={
+                      isLoading ? (
+                        <Loading color={THEME.COLORS.WHITE} />
+                      ) : (
+                        "Saída"
+                      )
+                    }
                     showIcon={false}
                     backgroundColor={THEME.COLORS.ORANGE}
                     textColor={THEME.COLORS.WHITE}

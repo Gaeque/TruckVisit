@@ -78,7 +78,7 @@ export function ConfirmPassword() {
                 <Text style={styles.textCpf}>111000111000</Text>
               </View>
             </View>
-            <View style={styles.containerInputs}>
+            <View>
               <Controller
                 control={control}
                 name="password"
@@ -111,7 +111,11 @@ export function ConfirmPassword() {
                 {errors.confirmPassword?.message}
               </Text>
             </View>
-            <Button title="Entrar" onPress={handleSubmit(handleLogin)} />
+            <Button
+              title="Entrar"
+              onPress={handleSubmit(handleLogin)}
+              showIcon={false}
+            />
           </View>
         </View>
       </ScrollView>

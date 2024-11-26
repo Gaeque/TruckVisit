@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Modal } from "react-native";
+import { View, Text, Modal, TouchableOpacity } from "react-native";
 
 import { useAuth } from "../../hooks/useAuth";
 
@@ -12,9 +12,13 @@ import IconLogout from "../../assets/IconLogout.svg";
 import { UserAvatar } from "../Avatar";
 import { Button } from "../Button";
 
+import { AppNavigatorRoutesProps } from "../../routes/tab.routes";
+import { useNavigation } from "@react-navigation/native";
+
 export function Header() {
   const { user, signOut } = useAuth();
   const [alertVisible, setAlertVisible] = useState(false);
+  const navigation = useNavigation<AppNavigatorRoutesProps>();
 
   const handleSignOut = () => {
     setAlertVisible(true);
@@ -29,10 +33,16 @@ export function Header() {
     setAlertVisible(false);
   };
 
+  function goToProfile() {
+    navigation.navigate("Profile");
+  }
+
   return (
     <View>
       <View style={styles.container}>
-        <UserAvatar size={60} />
+        <TouchableOpacity onPress={goToProfile}>
+          <UserAvatar size={60} />
+        </TouchableOpacity>
         <TeconLogo width={180} height={50} />
         <Button
           title="Sair"

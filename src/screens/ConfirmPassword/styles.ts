@@ -18,8 +18,8 @@ export const styles = StyleSheet.create({
     elevation: 10,
     backgroundColor: THEME.COLORS.WHITE,
     width: "80%",
-    height: 500,
-    borderRadius: 10,
+    height: 480,
+    borderRadius: 20,
   },
   containerProfile: {
     flexDirection: "row",
@@ -39,9 +39,6 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
     flexDirection: "column",
   },
-  containerInputs: {
-    gap: 20,
-  },
   backgroundImg: {
     width: "100%",
     height: "100%",
@@ -49,8 +46,8 @@ export const styles = StyleSheet.create({
   },
   textError: {
     color: THEME.COLORS.RED,
-    fontSize: 14,
-    marginTop: -20
+    fontSize: 12,
+    marginLeft: 4,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
