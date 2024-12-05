@@ -85,7 +85,6 @@ export function LastTransactions() {
           responseType: "arraybuffer",
         }
       );
-
       if (response.status !== 200) {
         Alert.alert("Não foi possível buscar seu ticket, tente novamente");
         return;

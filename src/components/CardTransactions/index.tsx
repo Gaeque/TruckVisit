@@ -55,6 +55,7 @@ export function CardTransactions({
     if (onSelectType) {
       onSelectType(type);
     }
+    console.log(type)
   };
 
   return (
@@ -149,7 +150,7 @@ export function CardTransactions({
                     backgroundColor={THEME.COLORS.ORANGE}
                     textColor={THEME.COLORS.WHITE}
                     size={{ width: 240, height: 60 }}
-                    onPress={() => handleSelection("ingate")}
+                    onPress={() => handleSelection("outgate")}
                   />
                 </View>
                 <Button

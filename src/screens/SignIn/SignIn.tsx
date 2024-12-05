@@ -22,6 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useAuth } from "../../hooks/useAuth";
 import { SnackBar } from "../../components/SnackBar";
+import { AppError } from "../../utils/AppError/AppError";
 
 const validarCPF = (cpf: string) => {
   if (cpf.length !== 11) return false;
@@ -51,7 +52,7 @@ const validarCPF = (cpf: string) => {
 
 export function SignIn() {
   const { signIn } = useAuth();
-
+  const navigation = useNavigation<AuthNavigatorRoutesProps>();
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -62,15 +63,15 @@ export function SignIn() {
 
   async function handleSignIn() {
     if (cpfError) return;
+
     try {
       setIsLoading(true);
-      await signIn(cpfValue, passwordValue);
+      await signIn(cpfValue, passwordValue, navigation);
     } catch (error) {
-      setIsLoading(false);
       const errorMessage =
-        error instanceof Error
+        error instanceof AppError
           ? error.message
-          : "Usuário ou senha incorretos, tente novamente.";
+          : "Usuário ou senha incorretos. Tente novamente.";
       setSnackbarMessage(errorMessage);
       setSnackbarVisible(true);
     } finally {
@@ -133,6 +134,7 @@ export function SignIn() {
                   secureTextEntry
                   value={passwordValue}
                   onChangeText={setPasswordValue}
+                  onSubmitEditing={handleSignIn}
                 />
               </View>
               <Button
@@ -141,9 +143,6 @@ export function SignIn() {
                 disabled={isLoading || cpfError !== null}
                 showIcon={false}
               />
-              <TouchableOpacity>
-                <Text>Esqueceu a senha?</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </ScrollView>

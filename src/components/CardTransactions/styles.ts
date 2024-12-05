@@ -2,13 +2,13 @@ import { StyleSheet } from "react-native";
 import THEME from "../../THEME";
 
 export const styles = StyleSheet.create({
-  container: { width: "100%", padding: 10 },
+  container: { width: "100%", padding: 8 },
   card: {
     width: "100%",
     height: "auto",
     borderRadius: 10,
     borderColor: THEME.COLORS.GREEN,
-    borderWidth: 2.2,
+    borderWidth: 2.8,
   },
   rowContainer: {
     flexDirection: "row",

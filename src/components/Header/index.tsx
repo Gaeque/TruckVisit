@@ -41,7 +41,7 @@ export function Header() {
     <View>
       <View style={styles.container}>
         <TouchableOpacity onPress={goToProfile}>
-          <UserAvatar size={60} />
+          <UserAvatar size={50} />
         </TouchableOpacity>
         <TeconLogo width={180} height={50} />
         <Button

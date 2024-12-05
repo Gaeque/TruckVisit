@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     elevation: 10,
     backgroundColor: THEME.COLORS.WHITE,
     width: "80%",
-    height: 460,
+    height: 440,
     borderRadius: 20,
   },
   containerInputs: {

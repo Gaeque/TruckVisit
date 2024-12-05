@@ -7,11 +7,16 @@ import {
   storageUserRemove,
 } from "../storage/storageUser";
 import { AppError } from "../utils/AppError/AppError";
+import { AuthNavigatorRoutesProps } from "../routes/auth.routes";
 
 export type AuthContextDataProps = {
   user: UserDTO;
   gKey: string | null;
-  signIn: (userId: string, password: string) => Promise<void>;
+  signIn: (
+    userId: string,
+    password: string,
+    navigation: AuthNavigatorRoutesProps
+  ) => Promise<void>;
   signOut: () => Promise<void>;
   isLoadingUserStorageData: boolean;
 };
@@ -30,24 +35,44 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [isLoadingUserStorageData, setIsLoadingUserStorageData] =
     useState(true);
 
-  async function signIn(userId: string, password: string) {
+  async function signIn(
+    userId: string,
+    password: string,
+    navigation: AuthNavigatorRoutesProps
+  ) {
     try {
       const { data } = await api.post("/api-app-truckvisit/auth/login", {
         userId,
         password,
       });
-      console.log(data);
       if (data.authN4) {
-        setUser(data);
-        const userWithGKey = { ...data, userGkey: data.userGkey };
-        await storageUserSave(userWithGKey);
-        const gKeyFromResponse = data.userGkey;
-        setGKey(gKeyFromResponse);
+        if (data.driverExpired) {
+          navigation.navigate("ConfirmPassword", {
+            userName: data.userName,
+            userCPF: data.userCPF,
+            userGkey: data.userGkey,
+          });
+          return;
+        }
+        if (!data.driverLocked) {
+          setUser(data);
+          const userWithGKey = { ...data, userGkey: data.userGkey };
+          await storageUserSave(userWithGKey);
+          setGKey(data.userGkey);
+        } else {
+          throw new AppError(
+            "Usuário bloqueado. Entre em contato com o suporte."
+          );
+        }
       } else {
-        throw new AppError("Autenticação falhou");
+        throw new AppError("Autenticação falhou. Verifique seu CPF e Senha.");
       }
     } catch (error) {
-      throw error;
+      if (error instanceof AppError) {
+        throw error;
+      } else {
+        throw new AppError("Ocorreu um erro inesperado. Tente novamente.");
+      }
     }
   }
 

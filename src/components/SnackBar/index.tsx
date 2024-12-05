@@ -2,7 +2,6 @@ import React from "react";
 import { Snackbar } from "react-native-paper";
 import { Text } from "react-native";
 import theme from "../../THEME";
-import THEME from "../../THEME";
 
 type SnackbarProps = {
   visible: boolean;

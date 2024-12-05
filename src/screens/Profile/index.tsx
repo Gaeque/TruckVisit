@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 import { Header } from "../../components/Header";
@@ -12,16 +12,17 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "../../hooks/useAuth";
+import { AuthContext } from "../../contexts/AuthContext";
+import { api } from "../../services/api";
 
 type FormDataProps = {
-  name?: string | null;
   password?: string | null;
   confirm_password?: string | null;
   old_password?: string | null;
 };
 
 const profileSchema = yup.object({
-  name: yup.string().nullable(),
   password: yup
     .string()
     .min(6, "A senha deve ter pelo menos 6 dígitos.")
@@ -43,28 +44,48 @@ const profileSchema = yup.object({
 });
 
 export function Profile() {
+  const { gKey: userGkey } = useContext(AuthContext);
+
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<FormDataProps>({
     resolver: yupResolver(profileSchema),
     mode: "onChange",
   });
 
-  const onSubmit = (data: FormDataProps) => {
-    reset({
-      old_password: "",
-      password: "",
-      confirm_password: "",
-    });
-    console.log("Iniciando atualização");
+  async function handleChangePassword(data: {
+    old_password: string;
+    password: string;
+  }) {
+    try {
+      const { old_password, password } = data;
 
-    setTimeout(() => {
-      console.log("Senha alterada");
-    }, 2000);
-  };
+      const payload = {
+        userGkey,
+        old_password,
+        new_password: password,
+      };
+
+      console.log("payload:", payload);
+
+      const response = await api.put(
+        `api-app-truckvisit/driver/setPWD`,
+        payload
+      );
+
+      console.log("response:", response.data);
+
+      if (response.status === 200) {
+        alert("Senha atualizada com sucesso!");
+      }
+    } catch (error) {
+      alert(
+        "Erro ao atualizar a senha. Verifique se a senha antiga está correta."
+      );
+    }
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -135,9 +156,14 @@ export function Profile() {
 
         <View style={styles.buttonContainer}>
           <Button
-            title="Atualizar perfil"
+            title="Atualizar"
             showIcon={false}
-            onPress={handleSubmit(onSubmit)}
+            onPress={handleSubmit((data) =>
+              handleChangePassword({
+                old_password: data.old_password || "",
+                password: data.password || "",
+              })
+            )}
           />
         </View>
       </KeyboardAwareScrollView>

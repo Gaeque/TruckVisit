@@ -1,12 +1,12 @@
-import { useContext } from "react";
-import { Avatar } from "react-native-paper";
+import React, { useContext } from "react";
+import { Image, StyleSheet } from "react-native";
 import { AuthContext } from "../../contexts/AuthContext";
 
 type AvatarProps = {
   size?: number;
 };
 
-const defaultUserImage = require("../../assets/UserAvatar.svg");
+const defaultUserImage = require("../../assets/UserAvatar.png");
 
 export function UserAvatar({ size = 48 }: AvatarProps) {
   const { user } = useContext(AuthContext);
@@ -15,5 +15,14 @@ export function UserAvatar({ size = 48 }: AvatarProps) {
     ? { uri: `data:image/png;base64,${user.userImage}` }
     : defaultUserImage;
 
-  return <Avatar.Image size={size} source={userImageSource} />;
+  return (
+    <Image
+      source={userImageSource}
+      style={[
+        { width: size, height: size, borderRadius: size / 2 },
+      ]}
+      resizeMode="cover"
+    />
+  );
 }
+

@@ -18,25 +18,30 @@ export const styles = StyleSheet.create({
     elevation: 10,
     backgroundColor: THEME.COLORS.WHITE,
     width: "80%",
-    height: 480,
+    height: 540,
     borderRadius: 20,
+    gap: 10,
   },
   containerProfile: {
     flexDirection: "row",
     alignItems: "center",
-    marginLeft: 0,
     width: "100%",
     justifyContent: "flex-start",
   },
   textName: {
     fontSize: 16,
     fontWeight: "600",
+    color: THEME.COLORS.BLACK,
   },
   textCpf: {
-    fontSize: 10,
+    fontSize: 12,
+    fontWeight: "500",
+    color: THEME.COLORS.GREEN,
+  },
+  containerInputs: {
+    gap: 4,
   },
   containerTextProfile: {
-    marginLeft: 10,
     flexDirection: "column",
   },
   backgroundImg: {
