@@ -4,11 +4,13 @@ import {
 } from "@react-navigation/native-stack";
 import { LastTransactions } from "../screens/LastTransactions";
 import { TabRoutes } from "./tab.routes";
+import { TeconMap } from "../screens/TeconMap"
 
 type HomeProps = {
   TabRoutes: undefined;
   HomeScreen: undefined;
   LastTransactions: undefined;
+  TeconMap: undefined;
 };
 
 export type HomeRoutesProps = NativeStackNavigationProp<HomeProps>;
@@ -20,6 +22,7 @@ export function HomeRoutes() {
     <Navigator screenOptions={{ headerShown: false }}>
       <Screen name="TabRoutes" component={TabRoutes} />
       <Screen name="LastTransactions" component={LastTransactions} />
+      <Screen name="TeconMap" component={TeconMap} />
     </Navigator>
   );
 }

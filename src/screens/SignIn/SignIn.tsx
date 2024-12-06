@@ -6,7 +6,6 @@ import {
   View,
   Text,
   ImageBackground,
-  TouchableOpacity,
 } from "react-native";
 
 import { styles } from "./styles";
@@ -127,6 +126,7 @@ export function SignIn() {
                   value={cpfValue}
                   onChangeText={handleCpfChange}
                   keyboardType="numeric"
+                  returnKeyType="next"
                 />
                 {cpfError && <Text style={styles.textError}>{cpfError}</Text>}
                 <Input

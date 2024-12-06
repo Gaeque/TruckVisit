@@ -16,10 +16,17 @@ export function Home() {
     navigation.navigate("LastTransactions");
   }
 
+  function handleMapTecon() {
+    navigation.navigate("TeconMap");
+  }
+
   return (
-    <View>
+    <View style={styles.screen}>
       <Header />
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView
+        contentContainerStyle={[styles.container, { paddingBottom: 20 }]}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.cardContainer}>
           <CardHome
             icon={<IconTransacoes />}
@@ -29,7 +36,7 @@ export function Home() {
           <CardHome
             icon={<IconMapaTecon />}
             title="Mapa Tecon"
-            onPress={handleLastTransactions}
+            onPress={handleMapTecon}
           />
         </View>
       </ScrollView>
