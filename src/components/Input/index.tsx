@@ -9,7 +9,7 @@ export function Input(props: TextInputProps) {
       style={styles.container}
       mode="outlined"
       underlineColor="transparent"
-      outlineStyle={{ borderColor: THEME.COLORS.ORANGE }}
+      outlineStyle={{ borderWidth: 2, borderColor: THEME.COLORS.ORANGE }}
       {...props}
     />
   );

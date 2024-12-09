@@ -12,7 +12,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAuth } from "../../hooks/useAuth";
 import { AuthContext } from "../../contexts/AuthContext";
 import { api } from "../../services/api";
 

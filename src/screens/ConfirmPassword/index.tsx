@@ -27,7 +27,6 @@ type ConfirmPasswordRouteParams = {
 const senhaSchema = yup.object().shape({
   password: yup
     .string()
-    .min(8, "A senha deve ter pelo menos 8 caracteres")
     .required("A senha é obrigatória"),
   confirmPassword: yup
     .string()

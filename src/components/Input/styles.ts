@@ -5,6 +5,6 @@ export const styles = StyleSheet.create({
   container: {
     width: 260,
     backgroundColor: THEME.COLORS.GREY,
-    borderRadius: 4
+    borderRadius: 4,
   },
 });

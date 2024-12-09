@@ -65,7 +65,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           );
         }
       } else {
-        throw new AppError("Autenticação falhou. Verifique seu CPF e Senha.");
+        throw new AppError("CPF ou Senha Incorretos.");
       }
     } catch (error) {
       if (error instanceof AppError) {

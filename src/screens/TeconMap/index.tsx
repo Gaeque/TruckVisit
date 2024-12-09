@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
-import { View, Image, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, TouchableOpacity, Modal, Image } from "react-native";
 import Orientation from "react-native-orientation-locker";
+import ImageViewer from "react-native-image-zoom-viewer";
 
+import { styles } from "./styles";
+import { IconReturn } from "../../components/IconReturn";
 import { HomeRoutesProps } from "../../routes/home.routes";
 import { useNavigation } from "@react-navigation/native";
 
-import { IconReturn } from "../../components/IconReturn";
-import { styles } from "./styles";
-import mapTecon from "../../assets/TeconMap.png";
-
 export function TeconMap() {
+  const navigation = useNavigation<HomeRoutesProps>();
+  const [imageUrl, setImageUrl] = useState<string>("");
+
   useEffect(() => {
     Orientation.lockToLandscape();
 
@@ -18,21 +20,36 @@ export function TeconMap() {
     };
   }, []);
 
-  const navigation = useNavigation<HomeRoutesProps>();
+  useEffect(() => {
+    const resolvedImage = Image.resolveAssetSource(
+      require("../../assets/TeconMap.png")
+    );
+    setImageUrl(resolvedImage.uri);
+  }, []);
 
   function handleGoBack() {
     navigation.navigate("TabRoutes");
   }
 
+  const images = [
+    {
+      url: imageUrl,
+    },
+  ];
+
   return (
     <View style={styles.wrapper}>
-      <TouchableOpacity onPress={handleGoBack} style={styles.backHome}>
-        <IconReturn width={40} height={40} />
-      </TouchableOpacity>
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image source={mapTecon} style={styles.image} resizeMode="contain" />
-        </View>
+        <Modal visible={true} transparent={true}>
+          <TouchableOpacity onPress={handleGoBack} style={styles.backHome}>
+            <IconReturn width={40} height={40} />
+          </TouchableOpacity>
+          <ImageViewer
+            imageUrls={images}
+            enableImageZoom={true}
+            renderIndicator={() => <></>}
+          />
+        </Modal>
       </View>
     </View>
   );

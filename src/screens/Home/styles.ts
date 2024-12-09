@@ -5,11 +5,17 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    padding: 20,
+    padding: 10,
   },
   cardContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between", 
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    gap: 10,
+  },
+  cardContainerLandscape: {
+    justifyContent: "space-between",
+    gap: 20,
   },
 });
