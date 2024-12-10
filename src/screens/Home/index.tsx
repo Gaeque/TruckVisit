@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, View, Dimensions } from "react-native";
 import Orientation from "react-native-orientation-locker";
+
 import { Header } from "../../components/Header";
 import { CardHome } from "../../components/CardHome";
 
@@ -8,7 +9,7 @@ import { styles } from "./styles";
 
 import IconTransacoes from "../../assets/IconTransacoes.svg";
 import IconMapaTecon from "../../assets/IconMapaTecon.svg";
-import IconPasseDePorta from "../../assets/IconPasseDePorta.svg";
+import IconAgendamento from "../../assets/IconAgendamento.svg";
 
 import { useNavigation } from "@react-navigation/native";
 import { HomeRoutesProps } from "../../routes/home.routes";
@@ -37,6 +38,10 @@ export function Home() {
     navigation.navigate("TeconMap");
   }
 
+  function handleAppointments() {
+    navigation.navigate("Appointments")
+  }
+
   return (
     <View style={styles.screen}>
       <Header />
@@ -51,14 +56,14 @@ export function Home() {
           ]}
         >
           <CardHome
-            icon={<IconTransacoes />}
+            icon={<IconTransacoes width={50}/>}
             title="Últimas Transações"
             onPress={handleLastTransactions}
           />
           <CardHome
-            icon={<IconPasseDePorta />}
-            title="Passes de Porta"
-            onPress={handleMapTecon}
+            icon={<IconAgendamento />}
+            title="Agendamento"
+            onPress={handleAppointments}
           />
           <CardHome
             icon={<IconMapaTecon />}

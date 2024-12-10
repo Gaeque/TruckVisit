@@ -17,8 +17,8 @@ import { api } from "../../services/api";
 
 type FormDataProps = {
   password?: string | null;
-  confirm_password?: string | null;
-  old_password?: string | null;
+  confirmPassword?: string | null;
+  oldPassword?: string | null;
 };
 
 const profileSchema = yup.object({
@@ -55,16 +55,18 @@ export function Profile() {
   });
 
   async function handleChangePassword(data: {
-    old_password: string;
+    oldPassword: string;
     password: string;
   }) {
     try {
-      const { old_password, password } = data;
+      const { oldPassword, password } = data;
+
+      console.log(data)
 
       const payload = {
         userGkey,
-        old_password,
-        new_password: password,
+        oldPassword,
+        password: password,
       };
 
       console.log("payload:", payload);
@@ -104,7 +106,7 @@ export function Profile() {
 
           <Controller
             control={control}
-            name="old_password"
+            name="oldPassword"
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
                 placeholder="Senha antiga"
@@ -135,7 +137,7 @@ export function Profile() {
 
           <Controller
             control={control}
-            name="confirm_password"
+            name="confirmPassword"
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
                 placeholder="Confirme sua nova senha"
@@ -146,9 +148,9 @@ export function Profile() {
               />
             )}
           />
-          {errors.confirm_password && (
+          {errors.confirmPassword && (
             <Text style={styles.textError}>
-              {errors.confirm_password.message}
+              {errors.confirmPassword.message}
             </Text>
           )}
         </View>
@@ -159,7 +161,7 @@ export function Profile() {
             showIcon={false}
             onPress={handleSubmit((data) =>
               handleChangePassword({
-                old_password: data.old_password || "",
+                oldPassword: data.oldPassword || "",
                 password: data.password || "",
               })
             )}

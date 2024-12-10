@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
   textName: {
     textAlign: "left",
     color: THEME.COLORS.WHITE,
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: "900",
     marginTop: 2,
   },

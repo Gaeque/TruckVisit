@@ -5,12 +5,14 @@ import {
 import { LastTransactions } from "../screens/LastTransactions";
 import { TabRoutes } from "./tab.routes";
 import { TeconMap } from "../screens/TeconMap"
+import { Appointments } from "../screens/Appointments";
 
 type HomeProps = {
   TabRoutes: undefined;
   HomeScreen: undefined;
   LastTransactions: undefined;
   TeconMap: undefined;
+  Appointments: undefined;
 };
 
 export type HomeRoutesProps = NativeStackNavigationProp<HomeProps>;
@@ -23,6 +25,7 @@ export function HomeRoutes() {
       <Screen name="TabRoutes" component={TabRoutes} />
       <Screen name="LastTransactions" component={LastTransactions} />
       <Screen name="TeconMap" component={TeconMap} />
+      <Screen name="Appointments" component={Appointments} />
     </Navigator>
   );
 }

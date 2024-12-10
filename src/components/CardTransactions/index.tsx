@@ -55,7 +55,6 @@ export function CardTransactions({
     if (onSelectType) {
       onSelectType(type);
     }
-    console.log(type)
   };
 
   return (

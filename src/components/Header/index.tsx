@@ -54,10 +54,10 @@ export function Header() {
           onPress={handleSignOut}
         />
       </View>
-      <View style={styles.textContainer}>
+      {/* <View style={styles.textContainer}>
         <Text style={styles.textName}>{user.userName}</Text>
         <Text style={styles.textCPF}>CPF: {user.userCPF}</Text>
-      </View>
+      </View> */}
       <Modal transparent={true} visible={alertVisible} animationType="fade">
         <View style={styles.overlay}>
           <View style={styles.containerModal}>

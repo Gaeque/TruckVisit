@@ -25,9 +25,7 @@ type ConfirmPasswordRouteParams = {
 };
 
 const senhaSchema = yup.object().shape({
-  password: yup
-    .string()
-    .required("A senha é obrigatória"),
+  password: yup.string().required("A senha é obrigatória"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Senhas devem ser iguais.")
@@ -85,15 +83,10 @@ export function ConfirmPassword() {
         password,
         phone: phoneNumber.replace(/\D/g, ""),
       };
-
-      console.log("payload:", payload);
-
       const response = await api.put(
         `api-app-truckvisit/driver/setPWD`,
         payload
       );
-
-      console.log("response:", response.data);
 
       if (response.status === 200) {
         alert("Senha atualizada com sucesso!");

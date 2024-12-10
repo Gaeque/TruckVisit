@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     paddingHorizontal: 20,
-    gap: 10,
+    gap: 20,
   },
   cardContainerLandscape: {
     justifyContent: "space-between",
