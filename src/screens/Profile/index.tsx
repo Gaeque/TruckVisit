@@ -16,9 +16,11 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { api } from "../../services/api";
 
 type FormDataProps = {
-  password?: string | null;
-  confirmPassword?: string | null;
-  oldPassword?: string | null;
+  password: string;
+  confirmPassword: string;
+  oldpassword: string;
+  phone: string;
+  userGkey: string;
 };
 
 const profileSchema = yup.object({
@@ -27,46 +29,73 @@ const profileSchema = yup.object({
     .min(6, "A senha deve ter pelo menos 6 dígitos.")
     .nullable()
     .transform((value) => (!!value ? value : null)),
-  confirm_password: yup
+  confirmPassword: yup
     .string()
+    .test(
+      "is-valid-confirmPassword",
+      "A confirmação de senha não confere.",
+      (value, context) => {
+        const password = context.parent.password;
+        return !value || value === password;
+      }
+    )
     .nullable()
-    .transform((value) => (!!value ? value : null))
-    .oneOf([yup.ref("password"), null], "A confirmação de senha não confere.")
-    .when("password", {
-      is: (Field: any) => Field,
-      then: (schema) =>
-        schema
-          .nullable()
-          .required("Informe a confirmação da senha")
-          .transform((value) => (!!value ? value : null)),
-    }),
+    .transform((value) => (!!value ? value : null)),
+  phone: yup
+    .string()
+    .test(
+      "is-valid-phone",
+      "Formato esperado: (ex: DDD123456789)",
+      (value) => !value || /^\(\d{2}\)\s9\s\d{4}-\d{4}$/.test(value)
+    ),
 });
+
+const formatPhoneNumber = (phone: string) => {
+  let formattedPhone = phone.replace(/\D/g, "");
+
+  if (formattedPhone.length > 2) {
+    formattedPhone = `(${formattedPhone.slice(0, 2)})${
+      formattedPhone.length > 3 ? " " : ""
+    }${formattedPhone.slice(2, 3)}${
+      formattedPhone.length > 3 ? " " : ""
+    }${formattedPhone.slice(3, 7)}${
+      formattedPhone.length > 7 ? "-" : ""
+    }${formattedPhone.slice(7, 11)}`;
+  } else if (formattedPhone.length > 1) {
+    formattedPhone = `(${formattedPhone}`;
+  }
+  return formattedPhone;
+};
 
 export function Profile() {
   const { gKey: userGkey } = useContext(AuthContext);
+  const { phone } = useContext(AuthContext);
+
+  console.log(phone);
 
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<FormDataProps>({
-    resolver: yupResolver(profileSchema),
-    mode: "onChange",
+    resolver: yupResolver(profileSchema as any),
+    mode: "onBlur",
   });
 
   async function handleChangePassword(data: {
-    oldPassword: string;
+    userGkey: string;
+    oldpassword: string;
     password: string;
+    phone?: string;
   }) {
     try {
-      const { oldPassword, password } = data;
-
-      console.log(data)
+      const { password, oldpassword, phone } = data;
 
       const payload = {
         userGkey,
-        oldPassword,
-        password: password,
+        oldpassword,
+        password,
+        phone: phone?.replace(/\D/g, "") ?? " ",
       };
 
       console.log("payload:", payload);
@@ -75,16 +104,11 @@ export function Profile() {
         `api-app-truckvisit/driver/setPWD`,
         payload
       );
-
-      console.log("response:", response.data);
-
       if (response.status === 200) {
         alert("Senha atualizada com sucesso!");
       }
     } catch (error) {
-      alert(
-        "Erro ao atualizar a senha. Verifique se a senha antiga está correta."
-      );
+      alert("Erro ao atualizar a senha. Tente novamente.");
     }
   }
 
@@ -106,7 +130,7 @@ export function Profile() {
 
           <Controller
             control={control}
-            name="oldPassword"
+            name="oldpassword"
             render={({ field: { onChange, onBlur, value } }) => (
               <Input
                 placeholder="Senha antiga"
@@ -153,18 +177,34 @@ export function Profile() {
               {errors.confirmPassword.message}
             </Text>
           )}
+          <Controller
+            control={control}
+            name="phone"
+            defaultValue={formatPhoneNumber(phone || "")}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                placeholder="Telefone"
+                keyboardType="numeric"
+                onBlur={onBlur}
+                value={value || ""}
+                onChangeText={(text) => {
+                  const formatted = formatPhoneNumber(text);
+                  onChange(formatted);
+                }}
+              />
+            )}
+          />
+
+          {errors.phone && (
+            <Text style={styles.textError}>{errors.phone.message}</Text>
+          )}
         </View>
 
         <View style={styles.buttonContainer}>
           <Button
             title="Atualizar"
             showIcon={false}
-            onPress={handleSubmit((data) =>
-              handleChangePassword({
-                oldPassword: data.oldPassword || "",
-                password: data.password || "",
-              })
-            )}
+            onPress={handleSubmit(handleChangePassword)}
           />
         </View>
       </KeyboardAwareScrollView>

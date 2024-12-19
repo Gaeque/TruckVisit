@@ -53,7 +53,7 @@ export function LastTransactions() {
     }
   };
 
-  async function fetchTransactionsCard(date = selectDate) {
+  async function getTransactionsCard(date = selectDate) {
     try {
       setIsLoading(true);
       if (userGkey) {
@@ -62,7 +62,11 @@ export function LastTransactions() {
         );
         const data: TransactionsDTO[] = response.data;
         setTransactions(data);
-        setFilteredTransactions(data.slice(0, 6));
+        if (date === 0) {
+          setFilteredTransactions(data.slice(0, 6));
+        } else {
+          setFilteredTransactions(data);
+        }
       }
     } catch (error) {
       if (error) {
@@ -76,7 +80,7 @@ export function LastTransactions() {
     }
   }
 
-  async function fetchTicketTransaction(type: string, visitGkey: number) {
+  async function getTicketTransaction(type: string, visitGkey: number) {
     try {
       setIsLoading(true);
       const response = await api.get(
@@ -134,31 +138,25 @@ export function LastTransactions() {
     }
   }
 
-  function handleClosePDF() {
-    setTicketBase64(null);
-  }
-
-  function handleGoBack() {
-    navigation.navigate("TabRoutes");
-  }
+  const handleClosePDF = () => setTicketBase64(null);
 
   useEffect(() => {
     if (userGkey) {
-      fetchTransactionsCard();
+      getTransactionsCard();
     }
   }, [userGkey]);
 
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleGoBack}>
+        <TouchableOpacity onPress={() => navigation.navigate("TabRoutes")}>
           <IconReturn width={40} height={40} />
         </TouchableOpacity>
         <Text style={styles.headerText}>Últimas transações</Text>
         <TouchableOpacity>
           <DateFilter
             onSelectDate={(date) => {
-              fetchTransactionsCard(date);
+              getTransactionsCard(date);
               setSelectDate(date);
             }}
           />
@@ -192,7 +190,7 @@ export function LastTransactions() {
               borderColor={
                 item.exited ? THEME.COLORS.GREY2 : THEME.COLORS.GREEN
               }
-              onSelectType={(type) => fetchTicketTransaction(type, item.gkey)}
+              onSelectType={(type) => getTicketTransaction(type, item.gkey)}
             />
           )}
           keyExtractor={(item) => item.gkey.toString()}
@@ -207,12 +205,13 @@ export function LastTransactions() {
             style={styles.pdfContainer}
             enablePaging={true}
             horizontal={true}
-            onPageChanged={(page) => {
-              setCurrentPage(page);
-            }}
             onLoadComplete={(numberOfPages) => {
               setTotalPages(numberOfPages);
             }}
+            onPageChanged={(page) => {
+              setCurrentPage(page);
+            }}
+            showsHorizontalScrollIndicator={true}
           />
 
           <View style={styles.sharePdfContainer}>
@@ -235,15 +234,9 @@ export function LastTransactions() {
             />
           </View>
 
-          <View style={styles.numberOfPages}>
-            <Text style={{ fontSize: 20 }}>
-              {currentPage}/{totalPages}
-            </Text>
-          </View>
-
           <View style={styles.closePdf}>
             <TouchableOpacity onPress={handleClosePDF}>
-              <IconReturn width={50} height={50} color="#000" />
+              <IconReturn width={50} height={50} color={THEME.COLORS.BLACK} />
             </TouchableOpacity>
           </View>
         </>

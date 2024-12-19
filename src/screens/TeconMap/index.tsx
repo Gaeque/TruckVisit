@@ -27,9 +27,6 @@ export function TeconMap() {
     setImageUrl(resolvedImage.uri);
   }, []);
 
-  function handleGoBack() {
-    navigation.navigate("TabRoutes");
-  }
 
   const images = [
     {
@@ -41,7 +38,10 @@ export function TeconMap() {
     <View style={styles.wrapper}>
       <View style={styles.container}>
         <Modal visible={true} transparent={true}>
-          <TouchableOpacity onPress={handleGoBack} style={styles.backHome}>
+          <TouchableOpacity
+            style={styles.backHome}
+            onPress={() => navigation.navigate("TabRoutes")}
+          >
             <IconReturn width={40} height={40} />
           </TouchableOpacity>
           <ImageViewer

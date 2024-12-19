@@ -17,6 +17,17 @@ export const styles = StyleSheet.create({
     color: THEME.COLORS.WHITE,
     textAlign: "center",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+  },
+  noAppointmentContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1
+  },
+  noAppointmentText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: THEME.COLORS.ORANGE,
+    textAlign: "center",
   },
 });

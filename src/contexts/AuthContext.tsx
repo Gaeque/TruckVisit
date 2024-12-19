@@ -12,6 +12,7 @@ import { AuthNavigatorRoutesProps } from "../routes/auth.routes";
 export type AuthContextDataProps = {
   user: UserDTO;
   gKey: string | null;
+  phone: string | null;
   signIn: (
     userId: string,
     password: string,
@@ -31,6 +32,7 @@ export const AuthContext = createContext<AuthContextDataProps>(
 
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({ authN4: false } as UserDTO);
+  const [phone, setPhone] = useState<string | null>(null);
   const [gKey, setGKey] = useState<string | null>(null);
   const [isLoadingUserStorageData, setIsLoadingUserStorageData] =
     useState(true);
@@ -59,6 +61,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
           const userWithGKey = { ...data, userGkey: data.userGkey };
           await storageUserSave(userWithGKey);
           setGKey(data.userGkey);
+          setPhone(data.phone || "");
         } else {
           throw new AppError(
             "Usuário bloqueado. Entre em contato com o suporte."
@@ -95,6 +98,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       if (userLogged) {
         setUser(userLogged);
         setGKey(userLogged.userGkey || null);
+        setPhone(userLogged.phone || " ");
       }
     } catch (error) {
       throw error;
@@ -109,7 +113,7 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ user, gKey, signIn, signOut, isLoadingUserStorageData }}
+      value={{ user, gKey, phone, signIn, signOut, isLoadingUserStorageData }}
     >
       {children}
     </AuthContext.Provider>

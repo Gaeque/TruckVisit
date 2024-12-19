@@ -7,4 +7,5 @@ export type UserDTO = {
   userImage: string;
   authN4: boolean;
   token: string;
+  phone: string;
 };

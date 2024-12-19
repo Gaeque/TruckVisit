@@ -2,65 +2,45 @@ import { StyleSheet } from "react-native";
 import THEME from "../../THEME";
 
 export const styles = StyleSheet.create({
-  container: { width: "100%", padding: 8 },
+  container: {
+    width: "100%",
+    padding: 8,
+  },
   card: {
     width: "100%",
-    height: "auto",
     borderRadius: 10,
-    borderColor: THEME.COLORS.GREEN,
+    borderColor: THEME.COLORS.GREY2,
     borderWidth: 2.8,
   },
   rowContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    padding: 10,
+    padding: 20,
   },
-  containerPlacaTransacoes: {
+  leftColumn: {
+    flex: 1,
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+  },
+  centerColumn: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "flex-start",
+  },
+  bottomColumn: {
+    alignItems: "center",
+    marginBottom: 4,
   },
   titulo: {
     fontSize: 16,
     fontWeight: "600",
     color: THEME.COLORS.ORANGE,
-    textAlign: "center",
-    paddingBottom: 6,
   },
   paragrafo: {
     fontSize: 16,
     color: THEME.COLORS.BLACK,
     fontWeight: "400",
     paddingBottom: 4,
-  },
-  containerData: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  containerTicket: {
-    paddingBottom: 30,
-    alignItems: "flex-end",
-  },
-  containerList: {
-    paddingHorizontal: 14,
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    flexWrap: "wrap",
-  },
-  containerItem: {
-    marginBottom: 10,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  containerTitle: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: THEME.COLORS.ORANGE,
-  },
-  containerName: {
-    fontSize: 14,
-    color: THEME.COLORS.BLACK,
-    marginBottom: 4,
   },
   modalContainer: {
     flex: 1,
@@ -73,8 +53,8 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
   },
   modalContent: {
-    width: 300,
-    height: 300,
+    width: "90%",
+    height: 500,
     padding: 20,
     backgroundColor: "white",
     borderRadius: 10,
@@ -96,17 +76,11 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  closeModalButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
+  buttonContainer: {
+    flexDirection: "row",
     alignItems: "center",
-    borderWidth: 2,
-    borderColor: THEME.COLORS.ORANGE,
-  },
-  closeModalButtonText: {
-    color: THEME.COLORS.ORANGE,
-    fontSize: 16,
-    fontWeight: "bold",
+    justifyContent: "space-between",
+    gap: 10,
+    marginTop: 20,
   },
 });
