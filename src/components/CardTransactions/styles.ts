@@ -61,6 +61,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: THEME.COLORS.BLACK,
     marginBottom: 4,
+    fontWeight: "400"
   },
   modalContainer: {
     flex: 1,

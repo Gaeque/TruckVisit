@@ -236,7 +236,7 @@ export function LastTransactions() {
 
           <View style={styles.closePdf}>
             <TouchableOpacity onPress={handleClosePDF}>
-              <IconReturn width={50} height={50} color={THEME.COLORS.BLACK} />
+              <IconReturn width={40} height={40} color={THEME.COLORS.BLACK} />
             </TouchableOpacity>
           </View>
         </>

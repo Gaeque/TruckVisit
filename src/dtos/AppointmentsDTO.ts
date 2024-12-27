@@ -1,6 +1,7 @@
 export type AppointmentsDTO = {
-  unitGkey: number;
+  unitGkey: string;
   unitId: string;
+  ufvGkey: string;
   expirationDoorPass: string;
   position: string;
   equipType: string;

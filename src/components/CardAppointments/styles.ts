@@ -42,6 +42,12 @@ export const styles = StyleSheet.create({
     fontWeight: "400",
     paddingBottom: 4,
   },
+  pAgendamento: {
+    fontSize: 16,
+    color: THEME.COLORS.GREEN2,
+    fontWeight: "600",
+    paddingBottom: 4,
+  },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
@@ -82,5 +88,60 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 10,
     marginTop: 20,
+  },
+  modalContainerExpo: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+  },
+  modalTitleExpo: {
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  modalContentExpo: {
+    width: "90%",
+    height: 340,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "space-between",
+    shadowColor: THEME.COLORS.ORANGE,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  rowContainerExpo: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 20,
+  },
+  leftColumnExpo: {
+    flex: 1,
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    gap: 20,
+  },
+  centerColumnExpo: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "flex-start",
+    gap: 20,
+  },
+  tituloExpo: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: THEME.COLORS.ORANGE,
+  },
+  paragrafoExpo: {
+    fontSize: 16,
+    color: THEME.COLORS.BLACK,
+    fontWeight: "400",
+    paddingBottom: 4,
   },
 });

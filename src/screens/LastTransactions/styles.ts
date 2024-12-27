@@ -67,5 +67,9 @@ export const styles = StyleSheet.create({
     top: 30,
     left: 20,
     zIndex: 2,
-  },
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: THEME.COLORS.ORANGE,
+    padding: 4,
+  }
 });

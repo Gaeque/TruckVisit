@@ -20,6 +20,7 @@ type cardAppointmentsProps = {
   expirationDoorPass?: string;
   requestedTime?: string;
   equipType?: string;
+  onVisualizePDF?: () => void;
 };
 
 function formatDateTime(dateTime: string | undefined): string {
@@ -40,6 +41,7 @@ export function CardAppointments({
   position,
   requestedTime,
   equipType,
+  onVisualizePDF,
 }: cardAppointmentsProps) {
   const IconComponent = category === "IMPRT" ? IconTruckImpo : IconTruckExpo;
 
@@ -69,14 +71,16 @@ export function CardAppointments({
               </View>
               <View>
                 <Text style={styles.titulo}>Posição</Text>
-                <Text style={styles.paragrafo}>{position || "--------"}</Text>
+                <Text style={styles.paragrafo}>
+                  {position || "Não definida"}
+                </Text>
               </View>
             </View>
 
             <View style={styles.centerColumn}>
               <View>
                 <Text style={styles.titulo}>Agendamento</Text>
-                <Text style={styles.paragrafo}>
+                <Text style={styles.pAgendamento}>
                   {formatDateTime(requestedTime)}
                 </Text>
               </View>
@@ -93,43 +97,106 @@ export function CardAppointments({
         </PaperCard>
       </TouchableOpacity>
 
-      <Modal
-        visible={isModalVisible}
-        transparent={true}
-        animationType="fade"
-        onRequestClose={handleCloseModal}
-      >
-        <TouchableWithoutFeedback onPress={handleCloseModal}>
-          <View style={styles.modalContainer}>
-            <TouchableWithoutFeedback>
-              <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>Passe de porta</Text>
-                <View style={styles.cardContainer}></View>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    title="Fechar"
-                    fontWeight={"600"}
-                    showIcon={false}
-                    fontSize={16}
-                    textColor={THEME.COLORS.ORANGE}
-                    size={{ width: 150, height: 40 }}
-                    onPress={handleCloseModal}
-                  />
-                  <Button
-                    title="Visualizar PDF"
-                    fontWeight={"600"}
-                    showIcon={false}
-                    fontSize={16}
-                    textColor={THEME.COLORS.ORANGE}
-                    size={{ width: 150, height: 40 }}
-                    onPress={handleCloseModal}
-                  />
+      {category === "IMPRT" ? (
+        <Modal
+          visible={isModalVisible}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={handleCloseModal}
+        >
+          <TouchableWithoutFeedback onPress={handleCloseModal}>
+            <View style={styles.modalContainer}>
+              <TouchableWithoutFeedback>
+                <View style={styles.modalContent}>
+                  <Text style={styles.modalTitle}>
+                    Passe de Porta para IMPORTAÇÃO
+                  </Text>
+                  <View style={styles.cardContainer}></View>
+                  <View style={styles.buttonContainer}>
+                    <Button
+                      title="Fechar"
+                      fontWeight={"600"}
+                      showIcon={false}
+                      fontSize={16}
+                      textColor={THEME.COLORS.ORANGE}
+                      size={{ width: 150, height: 40 }}
+                      onPress={handleCloseModal}
+                    />
+                    <Button
+                      title="Visualizar PDF"
+                      fontWeight={"600"}
+                      showIcon={false}
+                      fontSize={16}
+                      textColor={THEME.COLORS.ORANGE}
+                      size={{ width: 150, height: 40 }}
+                      onPress={onVisualizePDF}
+                    />
+                  </View>
                 </View>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+      ) : (
+        <Modal
+          visible={isModalVisible}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={handleCloseModal}
+        >
+          <TouchableWithoutFeedback onPress={handleCloseModal}>
+            <View style={styles.modalContainerExpo}>
+              <TouchableWithoutFeedback>
+                <View style={styles.modalContentExpo}>
+                  <Text style={styles.modalTitle}>EXPORTAÇÃO</Text>
+                  <View style={styles.rowContainerExpo}>
+                    <View style={styles.leftColumnExpo}>
+                      <View>
+                        <Text style={styles.tituloExpo}>Container</Text>
+                        <Text style={styles.paragrafoExpo}>
+                          {unitId || "--------"}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text style={styles.tituloExpo}>Posição</Text>
+                        <Text style={styles.paragrafoExpo}>
+                          {position || "Não definida"}
+                        </Text>
+                      </View>
+                    </View>
+
+                    <View style={styles.centerColumnExpo}>
+                      <View>
+                        <Text style={styles.tituloExpo}>Agendamento</Text>
+                        <Text style={styles.pAgendamento}>
+                          {formatDateTime(requestedTime)}
+                        </Text>
+                      </View>
+                      <View>
+                        <Text style={styles.tituloExpo}>ISO/TIPO</Text>
+                        <Text style={styles.paragrafoExpo}>
+                          {equipType || "--------"}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.buttonContainer}>
+                    <Button
+                      title="Fechar"
+                      fontWeight={"600"}
+                      showIcon={false}
+                      fontSize={16}
+                      textColor={THEME.COLORS.ORANGE}
+                      size={{ width: 150, height: 40 }}
+                      onPress={handleCloseModal}
+                    />
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+      )}
     </>
   );
 }
