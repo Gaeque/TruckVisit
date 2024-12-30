@@ -31,8 +31,9 @@ export function Appointments() {
   >([]);
   const [isSharing, setIsSharing] = useState(false);
   const [doorPassBase64, setdoorPassBase64] = useState<string | null>(null);
+  const [barCodeDoorPass, setbarCodeDoorPass] = useState<string | null>(null);
   const { gKey: userGkey } = useContext(AuthContext);
-  const [ufvGkey, setUfvGkey] = useState<string | null>(null);
+  const [ufvGkey, setUfvGkey] = useState<number>();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -122,6 +123,39 @@ export function Appointments() {
     }
   }
 
+  async function getBarCodeDoorPass(userGkey: number, ufvGkey: number) {
+    try {
+      const response = await api.get(
+        `/api-app-truckvisit/appointments/barcode-door-pass?driverGkey=${userGkey}&ufvGkey=${ufvGkey}`,
+        {
+          responseType: "arraybuffer",
+        }
+      );
+      if (response.status !== 200) {
+        Alert.alert(
+          "Erro",
+          "Não foi possível mostrar o código de barras, tente novamente."
+        );
+        return;
+      }
+      const base64 = btoa(
+        String.fromCharCode(...new Uint8Array(response.data))
+      );
+      setbarCodeDoorPass(base64);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const message = error.response?.data?.message;
+        Alert.alert("Aviso", message);
+      } else {
+        console.error("Erro inesperado:", error);
+        Alert.alert(
+          "Erro",
+          "Não foi possível buscar o código de barras. Utilize o PDF."
+        );
+      }
+    }
+  }
+
   const handleClosePDF = () => setdoorPassBase64(null);
 
   useEffect(() => {
@@ -157,6 +191,10 @@ export function Appointments() {
                 category={item.category}
                 equipType={item.equipType}
                 requestedTime={item.requestedTime}
+                onPress={getBarCodeDoorPass}
+                barCodeDoorPass={barCodeDoorPass}
+                userGkey={userGkey}
+                ufvGkey={item.ufvGkey}
                 onVisualizePDF={() => {
                   if (ufvGkey && userGkey) {
                     getDoorPass(Number(userGkey), Number(item.ufvGkey));

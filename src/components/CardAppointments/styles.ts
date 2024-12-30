@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
   },
   modalContent: {
     width: "90%",
-    height: 500,
+    height: 400,
     padding: 20,
     backgroundColor: "white",
     borderRadius: 10,
@@ -87,7 +87,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     gap: 10,
-    marginTop: 20,
+    marginBottom: 10,
   },
   modalContainerExpo: {
     flex: 1,
@@ -143,5 +143,26 @@ export const styles = StyleSheet.create({
     color: THEME.COLORS.BLACK,
     fontWeight: "400",
     paddingBottom: 4,
+  },
+  pdfContainer: {
+    width: "100%",
+    height: 239,
+    backgroundColor: THEME.COLORS.WHITE,
+    marginBottom: 10,
+  },
+  pdf: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+  barCodeTextContainer: {
+    flex: 1,
+    justifyContent: "center", 
+    alignItems: "center", 
+  },
+  barCodeText: {
+    textAlign: "center", 
+    fontSize: 16,
+    fontWeight: "400"
   },
 });

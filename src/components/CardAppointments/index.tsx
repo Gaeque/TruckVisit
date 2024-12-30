@@ -5,6 +5,8 @@ import {
   Text,
   Modal,
   TouchableWithoutFeedback,
+  Alert,
+  Image,
 } from "react-native";
 import { Card as PaperCard } from "react-native-paper";
 import { styles } from "./styles";
@@ -12,6 +14,7 @@ import IconTruckImpo from "../../assets/IconTruckImpo.svg";
 import IconTruckExpo from "../../assets/IconTruckExpo.svg";
 import { Button } from "../Button";
 import THEME from "../../THEME";
+import Pdf from "react-native-pdf";
 
 type cardAppointmentsProps = {
   unitId?: string;
@@ -21,6 +24,10 @@ type cardAppointmentsProps = {
   requestedTime?: string;
   equipType?: string;
   onVisualizePDF?: () => void;
+  onPress?: (userGkey: number, ufvGkey: number) => Promise<void>;
+  barCodeDoorPass?: string | null;
+  userGkey?: number | null;
+  ufvGkey?: number;
 };
 
 function formatDateTime(dateTime: string | undefined): string {
@@ -42,6 +49,10 @@ export function CardAppointments({
   requestedTime,
   equipType,
   onVisualizePDF,
+  onPress,
+  userGkey,
+  ufvGkey,
+  barCodeDoorPass,
 }: cardAppointmentsProps) {
   const IconComponent = category === "IMPRT" ? IconTruckImpo : IconTruckExpo;
 
@@ -49,6 +60,17 @@ export function CardAppointments({
 
   function handleOpenModal() {
     setModalVisible(true);
+    if (
+      userGkey != null &&
+      userGkey !== undefined &&
+      ufvGkey != null &&
+      ufvGkey !== undefined &&
+      onPress
+    ) {
+      onPress(userGkey, ufvGkey);
+    } else {
+      Alert.alert("Erro", "Dados insuficientes para realizar a operação.");
+    }
   }
 
   function handleCloseModal() {
@@ -67,12 +89,12 @@ export function CardAppointments({
             <View style={styles.leftColumn}>
               <View>
                 <Text style={styles.titulo}>Container</Text>
-                <Text style={styles.paragrafo}>{unitId || "--------"}</Text>
+                <Text style={styles.paragrafo}>{unitId || " "}</Text>
               </View>
               <View>
                 <Text style={styles.titulo}>Posição</Text>
                 <Text style={styles.paragrafo}>
-                  {position || "Não definida"}
+                  {position || " "}
                 </Text>
               </View>
             </View>
@@ -86,7 +108,7 @@ export function CardAppointments({
               </View>
               <View>
                 <Text style={styles.titulo}>ISO/TIPO</Text>
-                <Text style={styles.paragrafo}>{equipType || "--------"}</Text>
+                <Text style={styles.paragrafo}>{equipType || " "}</Text>
               </View>
             </View>
           </View>
@@ -109,9 +131,30 @@ export function CardAppointments({
               <TouchableWithoutFeedback>
                 <View style={styles.modalContent}>
                   <Text style={styles.modalTitle}>
-                    Passe de Porta para IMPORTAÇÃO
+                    Código de barras para importação
                   </Text>
-                  <View style={styles.cardContainer}></View>
+                  <View style={styles.pdfContainer}>
+                    {barCodeDoorPass ? (
+                      <Pdf
+                        source={{
+                          uri: `data:application/pdf;base64,${barCodeDoorPass}`,
+                        }}
+                        style={styles.pdf}
+                        onError={(error) =>
+                          Alert.alert(
+                            "Erro",
+                            "Falha ao exibir código de barras."
+                          )
+                        }
+                      />
+                    ) : (
+                      <View style={styles.barCodeTextContainer}>
+                        <Text style={styles.barCodeText}>
+                          Código de barras não disponível
+                        </Text>
+                      </View>
+                    )}
+                  </View>
                   <View style={styles.buttonContainer}>
                     <Button
                       title="Fechar"
@@ -154,13 +197,13 @@ export function CardAppointments({
                       <View>
                         <Text style={styles.tituloExpo}>Container</Text>
                         <Text style={styles.paragrafoExpo}>
-                          {unitId || "--------"}
+                          {unitId || " "}
                         </Text>
                       </View>
                       <View>
                         <Text style={styles.tituloExpo}>Posição</Text>
                         <Text style={styles.paragrafoExpo}>
-                          {position || "Não definida"}
+                          {position || " "}
                         </Text>
                       </View>
                     </View>
@@ -175,7 +218,7 @@ export function CardAppointments({
                       <View>
                         <Text style={styles.tituloExpo}>ISO/TIPO</Text>
                         <Text style={styles.paragrafoExpo}>
-                          {equipType || "--------"}
+                          {equipType || " "}
                         </Text>
                       </View>
                     </View>

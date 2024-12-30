@@ -11,7 +11,7 @@ import { AuthNavigatorRoutesProps } from "../routes/auth.routes";
 
 export type AuthContextDataProps = {
   user: UserDTO;
-  gKey: string | null;
+  gKey: number | null;
   phone: string | null;
   signIn: (
     userId: string,
@@ -33,7 +33,7 @@ export const AuthContext = createContext<AuthContextDataProps>(
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({ authN4: false } as UserDTO);
   const [phone, setPhone] = useState<string | null>(null);
-  const [gKey, setGKey] = useState<string | null>(null);
+  const [gKey, setGKey] = useState<number | null>(null);
   const [isLoadingUserStorageData, setIsLoadingUserStorageData] =
     useState(true);
 

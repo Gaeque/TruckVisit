@@ -1,5 +1,5 @@
 export type UserDTO = {
-  userGkey: string;
+  userGkey: number;
   password: string;
   userName: string;
   userCPF: string;
